@@ -26,8 +26,9 @@ describe('test/koa-redis.test.js', function () {
   it('should connect and ready with external client and quit ok', function* () {
     var store = require('../')({client: new Redis()});
     yield event(store, 'connect');
-    store.status.should.eql('ready');
+    store.status.should.eql('connect');
     yield event(store, 'ready');
+    store.status.should.eql('ready');
     yield store.quit();
     yield event(store, 'end');
     store.status.should.eql('end');
@@ -39,8 +40,9 @@ describe('test/koa-redis.test.js', function () {
       duplicate: true
     });
     yield event(store, 'connect');
-    store.status.should.eql('ready');
+    store.status.should.eql('connect');
     yield event(store, 'ready');
+    store.status.should.eql('ready');
     yield store.end()
     yield event(store, 'disconnect');
     store.status.should.eql('end');

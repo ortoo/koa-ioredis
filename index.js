@@ -66,6 +66,7 @@ var RedisStore = module.exports = function (options) {
   });
   this.on('ready', function() {
     debug('redis ready');
+    this.status = client.status;
   });
   this.on('end', function() {
     debug('redis ended');
