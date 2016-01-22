@@ -146,8 +146,14 @@ Generator that stops a Redis session after everything in the queue has completed
 #### session.end()
 Alias to `session.quit()`. It is not safe to use the real end function, as it cuts of the queue.
 
-#### session.connected
-Boolean giving the connection status updated using `client.connected` after any of the events above is fired.
+#### session.status
+String giving the connection status updated using `client.status` after any of the events above is fired.
+- `connecting`
+- `connect`
+- `ready`
+- `reconnecting`
+- `end`
+- `monitoring`
 
 #### session.client
 Direct access to the `ioredis` client.

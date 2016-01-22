@@ -62,35 +62,34 @@ var RedisStore = module.exports = function (options) {
   client.on('idle', this.emit.bind(this, 'idle'));
   this.on('connect', function() {
     debug('connected to redis');
-    this.connected = client.connected;
+    this.status = client.status;
   });
   this.on('ready', function() {
     debug('redis ready');
   });
   this.on('end', function() {
     debug('redis ended');
-    this.connected = client.connected;
+    this.status = client.status;
   });
   // No good way to test error
   /* istanbul ignore next */
   this.on('error', function() {
     debug('redis error');
-    this.connected = client.connected;
+    this.status = client.status;
   });
   // No good way to test reconnect
   /* istanbul ignore next */
   this.on('reconnecting', function() {
     debug('redis reconnecting');
-    this.connected = client.connected;
+    this.status = client.status;
   });
   this.on('idle', function() {
     debug('redis idle');
-    this.connected = client.connected;
+    this.status = client.status;
   });
 
-  //wrap redis
   this.client = client;
-  this.connected = client.connected;
+  this.status = client.status;
 };
 
 util.inherits(RedisStore, EventEmitter);
