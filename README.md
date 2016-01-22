@@ -1,5 +1,5 @@
-koa-redis
-=========
+koa-session-ioredis
+===================
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -10,40 +10,46 @@ koa-redis
 [![npm download][download-image]][download-url]
 [![license][license-image]][license-url]
 
-[npm-image]: https://img.shields.io/npm/v/koa-redis.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/koa-redis
-[travis-image]: https://img.shields.io/travis/koajs/koa-redis.svg?style=flat-square
-[travis-url]: https://travis-ci.org/koajs/koa-redis
-[coveralls-image]: https://img.shields.io/coveralls/koajs/koa-redis.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/koajs/koa-redis?branch=master
-[david-image]: https://img.shields.io/david/koajs/koa-redis.svg?style=flat-square&label=deps
-[david-url]: https://david-dm.org/koajs/koa-redis
-[david-dev-image]: https://img.shields.io/david/dev/koajs/koa-redis.svg?style=flat-square&label=devDeps
-[david-dev-url]: https://david-dm.org/koajs/koa-redis#info=devDependencies
-[david-opt-image]: https://img.shields.io/david/optional/koajs/koa-redis.svg?style=flat-square&label=optDeps
-[david-opt-url]: https://david-dm.org/koajs/koa-redis#info=devDependencies
-[node-image]: https://img.shields.io/node/v/koa-redis.svg?style=flat-square
+[npm-image]: https://img.shields.io/npm/v/koa-session-ioredis.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/koa-session-ioredis
+[travis-image]: https://img.shields.io/travis/ortoo/koa-ioredis.svg?style=flat-square
+[travis-url]: https://travis-ci.org/ortoo/koa-ioredis
+[coveralls-image]: https://img.shields.io/coveralls/ortoo/koa-ioredis.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/ortoo/koa-ioredis?branch=master
+[david-image]: https://img.shields.io/david/ortoo/koa-ioredis.svg?style=flat-square&label=deps
+[david-url]: https://david-dm.org/ortoo/koa-ioredis
+[david-dev-image]: https://img.shields.io/david/dev/ortoo/koa-ioredis.svg?style=flat-square&label=devDeps
+[david-dev-url]: https://david-dm.org/ortoo/koa-ioredis#info=devDependencies
+[david-opt-image]: https://img.shields.io/david/optional/ortoo/koa-ioredis.svg?style=flat-square&label=optDeps
+[david-opt-url]: https://david-dm.org/ortoo/koa-ioredis#info=devDependencies
+[node-image]: https://img.shields.io/node/v/koa-session-ioredis.svg?style=flat-square
 [node-url]: http://nodejs.org/download/
-[download-image]: https://img.shields.io/npm/dm/koa-redis.svg?style=flat-square
-[download-url]: https://npmjs.org/package/koa-redis
+[download-image]: https://img.shields.io/npm/dm/koa-session-ioredis.svg?style=flat-square
+[download-url]: https://npmjs.org/package/koa-session-ioredis
 [gittip-image]: https://img.shields.io/gittip/dead-horse.svg?style=flat-square
 [gittip-url]: https://www.gittip.com/dead-horse/
-[license-image]: https://img.shields.io/npm/l/koa-redis.svg?style=flat-square
-[license-url]: https://github.com/koajs/koa-redis/blob/master/LICENSE
+[license-image]: https://img.shields.io/npm/l/koa-session-ioredis.svg?style=flat-square
+[license-url]: https://github.com/ortoo/koa-ioredis/blob/master/LICENSE
 
-Redis storage for koa session middleware/cache.
+Redis storage for koa session middleware/cache using ioredis.
 
-[![NPM](https://nodei.co/npm/koa-redis.svg?downloads=true)](https://nodei.co/npm/koa-redis/)
+[![NPM](https://nodei.co/npm/koa-session-ioredis.svg?downloads=true)](https://nodei.co/npm/koa-session-ioredis/)
+
+## Installation
+
+```
+npm i koa-session-ioredis ioredis --save
+```
 
 ## Usage
 
-`koa-redis` works with [koa-generic-session](https://github.com/koajs/generic-session) (a generic session middleware for koa).
+`koa-session-ioredis` works with [koa-generic-session](https://github.com/koajs/generic-session) (a generic session middleware for koa).
 
 ### Example
 
 ```js
 var session = require('koa-generic-session');
-var redisStore = require('koa-redis');
+var redisStore = require('koa-session-ioredis');
 var koa = require('koa');
 
 var app = koa();
@@ -92,27 +98,26 @@ For more examples, please see the [examples folder of `koa-generic-session`](htt
 
 ### Options
 
- - *all [`node_redis`](https://www.npmjs.com/package/redis#options-is-an-object-with-the-following-possible-properties) options* - Useful things include `url`, `host`, `port`, and `path` to the server. Defaults to `127.0.0.1:6379`
- - `db` (number) - will run `client.select(db)` after connection
+ - *all [`ioredis`](https://github.com/luin/ioredis/blob/master/API.md#new-redisport-host-options) options*
+ - Useful things include `host`, `port`, and `path` to the server. Defaults to `127.0.0.1:6379`
  - `client` (object) - supply your own client, all other options are ignored unless `duplicate` is also supplied
  - `duplicate` (boolean) - When true, it will run `client.duplicate(options)` on the supplied `client` and use all other options supplied. This is useful if you want to select a different DB for sessions but also want to base from the same client object.
- - **DEPRECATED:** old options - `pass` and `socket` have been replaced by `auth_pass` and `path`, but they should be backwards compatible (still work).
 
 ### Events
-See the [`node_redis` docs](https://www.npmjs.com/package/redis#connection-events) for more info.
+See the [`ioredis` docs](https://www.npmjs.com/package/ioredis#connection-events) for more info.
  - `ready`
  - `connect`
  - `reconnecting`
  - `error`
  - `end`
- - `drain`
+ - `close`
  - `idle`
 
 ### API
 These are some the funcitons that `koa-generic-session` uses that you can use manually. You will need to inintialize differently than the example above:
 ```js
 var session = require('koa-generic-session');
-var redisStore = require('koa-redis')({
+var redisStore = require('koa-session-ioredis')({
   // Options specified here
 });
 var app = require('koa')();
@@ -130,13 +135,13 @@ Initialize the Redis connection with the optionally provided options (see above)
 Generator that gets a session by ID. Returns parsed JSON is exists, `null` if it does not exist, and nothing upon error.
 
 #### session.set(sid, sess, ttl)
-Generator that sets a JSON session by ID with an optional time-to-live (ttl) in milliseconds. Yields `node_redis`'s `client.set()` or `client.setex()`.
+Generator that sets a JSON session by ID with an optional time-to-live (ttl) in milliseconds. Yields `ioredis`'s `client.set()` or `client.setex()`.
 
 #### session.destroy(sid)
-Generator that destroys a session (removes it from Redis) by ID. Tields `node_redis`'s `client.del()`.
+Generator that destroys a session (removes it from Redis) by ID. Yields `ioredis`'s `client.del()`.
 
 #### session.quit()
-Generator that stops a Redis session after everything in the queue has completed. Yields `node_redis`'s `client.quit()`.
+Generator that stops a Redis session after everything in the queue has completed. Yields `ioredis`'s `client.quit()`.
 
 #### session.end()
 Alias to `session.quit()`. It is not safe to use the real end function, as it cuts of the queue.
@@ -144,11 +149,8 @@ Alias to `session.quit()`. It is not safe to use the real end function, as it cu
 #### session.connected
 Boolean giving the connection status updated using `client.connected` after any of the events above is fired.
 
-#### session.\_redisClient
-Direct access to the `node_redis` client object.
-
 #### session.client
-Direct access to the `co-redis` wrapper around the `node_redis` client.
+Direct access to the `ioredis` client.
 
 ## Benchmark
 
@@ -159,7 +161,7 @@ Direct access to the `co-redis` wrapper around the `node_redis` client.
 |connect with session|**2759.70 trans/sec**|**0.02 secs**|
 |koa with session|**2355.38 trans/sec**|**0.02 secs**|
 
-Detailed benchmark report [here](https://github.com/koajs/koa-redis/tree/master/benchmark)
+Detailed benchmark report [here](https://github.com/ortoo/koa-ioredis/tree/master/benchmark)
 
 ## Testing
 1. Start a Redis server on `localhost:6379`. You can use [`redis-windows`](https://github.com/ServiceStack/redis-windows) if you are on Windows or just want a quick VM-based server.
@@ -168,7 +170,7 @@ Detailed benchmark report [here](https://github.com/koajs/koa-redis/tree/master/
 4. Run `npm test` to run the tests and generate coverage. To run the tests without generating coverage, run `npm run-script test-only`.
 
 ## Authors
-See the [contributing tab](https://github.com/koajs/koa-redis/graphs/contributors)
+See the [contributing tab](https://github.com/ortoo/koa-ioredis/graphs/contributors)
 
 ## Licences
 (The MIT License)

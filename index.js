@@ -14,9 +14,8 @@
  */
 
 var EventEmitter = require('events').EventEmitter;
-var debug = require('debug')('koa-redis');
-var redis = require('redis');
-var redisWrapper = require('co-redis');
+var debug = require('debug')('koa-session-ioredis');
+var Redis = require('ioredis');
 var util = require('util');
 
 /**
@@ -38,11 +37,9 @@ var RedisStore = module.exports = function (options) {
   options = options || {};
 
   var client;
-  options.auth_pass = options.auth_pass || options.pass || null;     // For backwards compatibility
-  options.path = options.path || options.socket || null;             // For backwards compatibility
   if (!options.client) {
     debug('Init redis new client');
-    client = redis.createClient(options);
+    client = new Redis(options);
   } else {
     if (options.duplicate) {                                         // Duplicate client and update with options provided
       debug('Duplicating provided client with new options (if provided)');
@@ -56,23 +53,12 @@ var RedisStore = module.exports = function (options) {
     }
   }
 
-  if (options.db) {
-    debug('selecting db %s', options.db)
-    client.select(options.db);
-    client.on('connect', function() {
-      client.send_anyways = true;
-      client.select(options.db);
-      client.send_anyways = false;
-    });
-  }
-
   client.on('error', this.emit.bind(this, 'error'));
   client.on('end', this.emit.bind(this, 'end'));
   client.on('end', this.emit.bind(this, 'disconnect'));              // For backwards compatibility
   client.on('connect', this.emit.bind(this, 'connect'));
   client.on('reconnecting', this.emit.bind(this, 'reconnecting'));
   client.on('ready', this.emit.bind(this, 'ready'));
-  client.on('drain', this.emit.bind(this, 'drain'));
   client.on('idle', this.emit.bind(this, 'idle'));
   this.on('connect', function() {
     debug('connected to redis');
@@ -97,18 +83,13 @@ var RedisStore = module.exports = function (options) {
     debug('redis reconnecting');
     this.connected = client.connected;
   });
-  this.on('drain', function() {
-    debug('redis drain');
-    this.connected = client.connected;
-  });
   this.on('idle', function() {
     debug('redis idle');
     this.connected = client.connected;
   });
 
   //wrap redis
-  this._redisClient = client;
-  this.client = redisWrapper(client);
+  this.client = client;
   this.connected = client.connected;
 };
 

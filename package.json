@@ -1,11 +1,11 @@
 {
-  "name": "koa-redis",
-  "description": "koa session with redis using koa-generic-session",
-  "repository": "koajs/koa-redis",
+  "name": "koa-session-ioredis",
+  "description": "koa session with ioredis using koa-generic-session",
+  "repository": "ortoo/koa-ioredis",
   "bugs": {
-    "url": "https://github.com/koajs/koa-redis/issues"
+    "url": "https://github.com/ortoo/koa-ioredis/issues"
   },
-  "homepage": "https://github.com/koajs/koa-redis",
+  "homepage": "https://github.com/ortoo/koa-ioredis",
   "version": "2.0.0",
   "files": [
     "./index.js"
@@ -19,13 +19,15 @@
     "koa",
     "middleware",
     "session",
-    "redis"
+    "redis",
+    "ioredis"
   ],
-  "author": "dead_horse <dead_horse@qq.com>",
+  "author": "James Sharp <james@ortootech.com>",
   "dependencies": {
-    "co-redis": "~2.0.0",
     "debug": "~2.2.0",
-    "redis": "~2.4.2"
+  },
+  "peerDependencies": {
+    "ioredis": "1.14.0"
   },
   "devDependencies": {
     "autod": "2",
