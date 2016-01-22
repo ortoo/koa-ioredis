@@ -7,9 +7,7 @@
   },
   "homepage": "https://github.com/ortoo/koa-ioredis",
   "version": "1.0.1",
-  "files": [
-    "./index.js"
-  ],
+  "main": "index.js",
   "scripts": {
     "test": "istanbul cover node_modules/mocha/bin/_mocha -- --require co-mocha \"test/**/*.test.js\"",
     "test-only": "node_modules/.bin/mocha --require co-mocha \"test/**/*.test.js\"",
