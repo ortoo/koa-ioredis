@@ -6,7 +6,7 @@
     "url": "https://github.com/ortoo/koa-ioredis/issues"
   },
   "homepage": "https://github.com/ortoo/koa-ioredis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "files": [
     "./index.js"
   ],
