@@ -24,7 +24,7 @@
   ],
   "author": "James Sharp <james@ortootech.com>",
   "dependencies": {
-    "debug": "~2.2.0",
+    "debug": "~2.2.0"
   },
   "peerDependencies": {
     "ioredis": "1.14.0"
