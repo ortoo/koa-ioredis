@@ -25,7 +25,7 @@
     "debug": "~2.2.0"
   },
   "peerDependencies": {
-    "ioredis": "~2.2.0"
+    "ioredis": "^2.2.0"
   },
   "devDependencies": {
     "autod": "2",
