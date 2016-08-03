@@ -38,9 +38,6 @@
     "mocha": "^2.3.4",
     "should": "^8.1.1"
   },
-  "optionalDependencies": {
-    "hiredis": "~0.4.1"
-  },
   "engines": {
     "node": ">= 4"
   },
