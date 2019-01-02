@@ -17,6 +17,7 @@ var EventEmitter = require('events').EventEmitter;
 var debug = require('debug')('koa-session-ioredis');
 var Redis = require('ioredis');
 var util = require('util');
+var wrap = require('co-wrap-all');
 
 /**
  * Initialize redis session middleware with `opts` (see the README for more info):
@@ -134,5 +135,7 @@ RedisStore.prototype.quit = function* () {                         // End connec
   debug('quitting redis client');
   yield this.client.quit();
 };
+
+wrap(RedisStore.prototype);
 
 RedisStore.prototype.end = RedisStore.prototype.quit;              // End connection SAFELY. The real end() command should never be used, as it cuts off to queue.
